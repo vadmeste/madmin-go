@@ -223,19 +223,31 @@ func (r *RealtimeMetrics) Merge(other *RealtimeMetrics) {
 	}
 }
 
+// BucketScanInfo holds scan information for a given bucket
+type BucketScanInfo struct {
+	Name             string
+	LastScannedTime  time.Time
+	LastScanDuration time.Duration
+	Cycle            uint64
+}
+
+// BucketsScanInfo holds scan information summary of all buckets
+type BucketsScanInfo struct {
+	OngoingBuckets      int
+	LastScannedESBucket BucketScanInfo
+}
+
 // ScannerMetrics contains scanner information.
 type ScannerMetrics struct {
 	// Time these metrics were collected
 	CollectedAt time.Time `json:"collected"`
 
+	CurrentCycle      uint64      `json:"current_cycle"`        // Deprecated Sep 2023
+	CurrentStarted    time.Time   `json:"current_started"`      // Deprecated Sep 2023
+	CyclesCompletedAt []time.Time `json:"cycle_complete_times"` // Deprecated Sep 2023
+
 	// Current scanner cycle
-	CurrentCycle uint64 `json:"current_cycle"`
-
-	// Start time of current cycle
-	CurrentStarted time.Time `json:"current_started"`
-
-	// History of when last cycles completed
-	CyclesCompletedAt []time.Time `json:"cycle_complete_times"`
+	BucketsScanInfo BucketsScanInfo `json:"buckets_scan_info"`
 
 	// Number of accumulated operations by type since server restart.
 	LifeTimeOps map[string]uint64 `json:"life_time_ops,omitempty"`
@@ -290,10 +302,17 @@ func (s *ScannerMetrics) Merge(other *ScannerMetrics) {
 	if other == nil {
 		return
 	}
+
 	if s.CollectedAt.Before(other.CollectedAt) {
 		// Use latest timestamp
 		s.CollectedAt = other.CollectedAt
+		s.BucketsScanInfo.OngoingBuckets = other.BucketsScanInfo.OngoingBuckets
+
+		if other.BucketsScanInfo.LastScannedESBucket.Name != "" {
+			s.BucketsScanInfo.LastScannedESBucket = other.BucketsScanInfo.LastScannedESBucket
+		}
 	}
+
 	if s.CurrentCycle < other.CurrentCycle {
 		s.CurrentCycle = other.CurrentCycle
 		s.CyclesCompletedAt = other.CyclesCompletedAt
