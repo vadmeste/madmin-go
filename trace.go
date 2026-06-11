@@ -84,6 +84,8 @@ const (
 	TraceSystemInventory
 	// TraceTablesCompaction will trace table compaction operations.
 	TraceTablesCompaction
+	// TraceBatchHeal will trace batch healing operations.
+	TraceBatchHeal
 	// Add more here...
 
 	// TraceAll contains all valid trace modes.
@@ -93,7 +95,7 @@ const (
 
 const (
 	// TraceBatch will trace all batch operations.
-	TraceBatch = TraceBatchReplication | TraceBatchKeyRotation | TraceBatchExpire // |TraceBatch<NextFeature>
+	TraceBatch = TraceBatchReplication | TraceBatchKeyRotation | TraceBatchExpire | TraceBatchHeal
 )
 
 // FindTraceType will find a single trace type from a string,

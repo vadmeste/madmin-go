@@ -42,6 +42,7 @@ const (
 	BatchJobKeyRotate BatchJobType = "keyrotate"
 	BatchJobExpire    BatchJobType = "expire"
 	BatchJobCatalog   BatchJobType = "catalog"
+	BatchJobHeal      BatchJobType = "heal"
 )
 
 const (

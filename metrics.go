@@ -1189,6 +1189,19 @@ type JobMetric struct {
 	KeyRotate *KeyRotationInfo `json:"rotation,omitempty"`
 	Expired   *ExpirationInfo  `json:"expired,omitempty"`
 	Catalog   *CatalogInfo     `json:"catalog,omitempty"`
+	Heal      *HealInfo        `json:"heal,omitempty"`
+}
+
+// HealInfo contains the progress of a batch heal job.
+type HealInfo struct {
+	// Last bucket/object healed
+	Bucket string `json:"lastBucket"`
+	Object string `json:"lastObject"`
+
+	// Verbose information
+	ObjectsHealed int64 `json:"objectsHealed"`
+	ObjectsFailed int64 `json:"objectsFailed"`
+	BytesHealed   int64 `json:"bytesHealed"`
 }
 
 type ReplicateInfo struct {
