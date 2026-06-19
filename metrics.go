@@ -2932,6 +2932,7 @@ const (
 	HealOriginReadRepair  HealOrigin = "read-repair"
 	HealOriginDiskReplace HealOrigin = "disk-replace"
 	HealOriginDiskOffline HealOrigin = "disk-offline"
+	HealOriginDiskSkew    HealOrigin = "disk-skew"
 	HealOriginManual      HealOrigin = "manual"
 	HealOriginCrossPool   HealOrigin = "cross-pool"
 )

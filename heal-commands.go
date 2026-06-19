@@ -372,6 +372,9 @@ const (
 	HealingReasonFreshDisk HealingDriveReason = iota
 	// HealingReasonOfflineDisk means the disk was detected as being offline for too long
 	HealingReasonOfflineDisk
+	// HealingReasonSkewedDisk means the disk usage was detected as being
+	// disproportionately higher than its peers in the same erasure set.
+	HealingReasonSkewedDisk
 )
 
 //go:generate go tool stringer -type=OfflineReason -output=heal-commands-offline-reason_gen.go -trimprefix=OfflineReason $GOFILE

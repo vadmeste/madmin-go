@@ -10,11 +10,12 @@ func _() {
 	var x [1]struct{}
 	_ = x[HealingReasonFreshDisk-0]
 	_ = x[HealingReasonOfflineDisk-1]
+	_ = x[HealingReasonSkewedDisk-2]
 }
 
-const _HealingDriveReason_name = "FreshDiskOfflineDisk"
+const _HealingDriveReason_name = "FreshDiskOfflineDiskSkewedDisk"
 
-var _HealingDriveReason_index = [...]uint8{0, 9, 20}
+var _HealingDriveReason_index = [...]uint8{0, 9, 20, 30}
 
 func (i HealingDriveReason) String() string {
 	if i < 0 || i >= HealingDriveReason(len(_HealingDriveReason_index)-1) {
